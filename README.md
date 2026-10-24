@@ -1,6 +1,6 @@
 # ❄️ Pygame Snowfall
 
-> 🎓 Rebuilt and extended from a lab for **CS 172** at **Drexel University**
+> 🎓 Made during a lab for **CS 172** at **Drexel University**
 
 An animated winter scene in Pygame. Snowflakes drift down from the sky at different sizes and speeds, and instead of disappearing when they hit the ground, they pile up into a layer of snow.
 
