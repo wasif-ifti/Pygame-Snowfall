@@ -4,6 +4,7 @@
 #   SPACE = pause / resume the snow
 #   Q     = quit
 
+import asyncio
 import random
 import pygame
 from drawable import Rectangle, Snowflake
@@ -13,7 +14,7 @@ HEIGHT = 500
 GROUND_Y = 300
 
 
-def main():
+async def main():
     pygame.init()
     surface = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Snowfall")
@@ -42,6 +43,11 @@ def main():
             drawables.append(Snowflake(x, 0, random.randint(3, 6),
                                        random.randint(1, 3)))
 
+            # Keep the scene from slowing down: once there's a lot of snow,
+            # drop the oldest flake (index 2, right after the sky and ground)
+            if len(drawables) > 1500:
+                drawables.pop(2)
+
             # Move every snowflake down; landed ones stay on the ground
             for item in drawables:
                 if isinstance(item, Snowflake):
@@ -53,9 +59,10 @@ def main():
 
         pygame.display.update()
         clock.tick(30)
+        await asyncio.sleep(0)  # lets the game run in a web browser too
 
     pygame.quit()
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
